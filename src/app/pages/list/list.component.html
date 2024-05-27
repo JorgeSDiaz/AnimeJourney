@@ -1,15 +1,12 @@
-<p-table #dt2 [value]="animes" [tableStyle]="{ 'max-width': '50rem' }" styleClass="p-datatable-striped p-datatable-gridlines"
-    [globalFilterFields]="['title', 'title_english']">
+<p-table #dt2 [value]="animes()" [tableStyle]="{ 'max-width': '50rem' }"
+    styleClass="p-datatable-striped p-datatable-gridlines" [globalFilterFields]="['title', 'title_english']">
     <ng-template pTemplate="caption">
         <div class="flex">
             <p-iconField iconPosition="left" class="custom-icon-field">
                 <p-inputIcon>
                     <i class="pi pi-search"></i>
                 </p-inputIcon>
-                <input 
-                    pInputText 
-                    type="text" 
-                    (input)="dt2.filterGlobal(getFilterValue($event), 'contains')" 
+                <input pInputText type="text" (input)="dt2.filterGlobal(getFilterValue($event), 'contains')"
                     placeholder="Search by title" />
             </p-iconField>
         </div>
@@ -17,7 +14,8 @@
     <ng-template pTemplate="body" let-rowData let-anime>
         <tr>
             <td>
-                <img [src]="anime.images.image_url" width="150rem" min-width="100rem">
+                <p-image [src]="anime.images.image_url" width="80rem" [alt]="anime.title" [preview]="true"
+                    [previewImageSrc]="anime.images.large_image_url" />
             </td>
         </tr>
     </ng-template>

@@ -22,6 +22,6 @@ export class AnimeService {
   }
 
   public getAnime(animeName: string) {
-    return this.http.get<AnimeResponse>(`https://api.jikan.moe/v4/anime?q=${animeName}`);
+    return this.http.get<AnimeResponse>(`https://api.jikan.moe/v4/anime?q=${animeName}&limit=5`);
   }
 }
