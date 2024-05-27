@@ -1,5 +1,5 @@
-<p-table #dt2 [columns]="cols" [value]="data" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped"
-    [globalFilterFields]="['name']">
+<p-table #dt2 [value]="animes" [tableStyle]="{ 'max-width': '50rem' }" styleClass="p-datatable-striped p-datatable-gridlines"
+    [globalFilterFields]="['title', 'title_english']">
     <ng-template pTemplate="caption">
         <div class="flex">
             <p-iconField iconPosition="left" class="custom-icon-field">
@@ -9,27 +9,16 @@
                 <input 
                     pInputText 
                     type="text" 
-                    (input)="dt2.filterGlobal(getFilterValue($event), 'startsWith')" 
-                    placeholder="Search by Name" />
+                    (input)="dt2.filterGlobal(getFilterValue($event), 'contains')" 
+                    placeholder="Search by title" />
             </p-iconField>
         </div>
     </ng-template>
-    <ng-template pTemplate="header" let-columns>
+    <ng-template pTemplate="body" let-rowData let-anime>
         <tr>
-            @for (col of columns; track $index) {
-            <th>
-                {{ col.header }}
-            </th>
-            }
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr>
-            @for (col of columns; track $index) {
-            <th>
-                {{ rowData[col.field] }}
-            </th>
-            }
+            <td>
+                <img [src]="anime.images.image_url" width="150rem" min-width="100rem">
+            </td>
         </tr>
     </ng-template>
 </p-table>

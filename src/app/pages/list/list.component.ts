@@ -3,10 +3,11 @@ import { TableModule } from 'primeng/table';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { AnimeService } from '../../core/services/anime.service';
+import { Anime } from '../../core/models/anime';
 
-interface columnData{
+interface columnData {
   field: string;
-  header: string;
 }
 
 @Component({
@@ -17,24 +18,26 @@ interface columnData{
   styleUrl: './list.component.css',
 })
 export class ListComponent {
-  public cols!: columnData[];
-  public data!: any[];
+  public animes!: Anime[];
+
+  constructor(private animeService: AnimeService) {}
 
   ngOnInit() {
-    this.data = [
-      { name: 'John', age: 30, job: 'Doctor', city: 'New York' },
-      { name: 'Doe', age: 25, job: 'Engineer', city: 'California' },
-      { name: 'Smith', age: 35, job: 'Teacher', city: 'Texas' },
-      { name: 'Johnson', age: 40, job: 'Designer', city: 'Florida' }
-    ];
-
-    this.cols = [
-      { field: 'name', header: 'Name' },
-      { field: 'age', header: 'Age' },
-      { field: 'job', header: 'Job' },
-      { field: 'city', header: 'City' }
-    ];
-  };
+    this.animeService.getAnime('naruto').subscribe(
+      (animeResponse) => {
+        this.animes = animeResponse.data.map((animeResponse) =>
+          this.animeService.transformResponse(animeResponse)
+        );
+      },
+      (error) => {
+        console.error(error);
+      },
+      () => {
+        console.log('Completed');
+        console.log(this.animes);
+      }
+    );
+  }
 
   getFilterValue(event: any) {
     return event.target.value;
